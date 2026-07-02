@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>비열 비교 실험 - 물과 식용유</title>
+<style>
+  :root{
+    --bg:#f6fbff;
+    --panel:#ffffff;
+    --ink:#123;
+    --sub:#456;
+    --water:#1e88e5;
+    --oil:#fb8c00;
+    --grid:#cfd8dc;
+    --accent:#2e7d32;
+    --danger:#c62828;
+    --shadow:0 0.5rem 1.2rem rgba(0,0,0,0.08);
+    --radius:1rem;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui, -apple-system, "Segoe UI", sans-serif;
+    background:linear-gradient(180deg,#eef8ff 0%, #f9fcff 100%);
+    color:var(--ink);
+  }
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:1rem;
+  }
+  h1{
+    margin:0 0 0.4rem 0;
+    font-size:clamp(1.8rem, 3vw, 3rem);
+    line-height:1.2;
+  }
+  .subtitle{
+    font-size:clamp(1rem, 1.8vw, 1.35rem);
+    color:var(--sub);
+    margin-bottom:1rem;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: minmax(280px, 380px) 1fr;
+    gap:1rem;
+  }
+  @media (max-width: 900px){
+    .grid{grid-template-columns:1fr}
+  }
+  .panel{
+    background:var(--panel);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:1rem;
+  }
+  .section-title{
+    font-size:clamp(1.2rem, 2vw, 1.6rem);
+    margin:0 0 0.8rem 0;
+  }
+  .controls{
+    display:grid;
+    gap:1rem;
+  }
+  .radio-group{
+    display:grid;
+    gap:0.8rem;
+  }
+  label.choice{
+    display:flex;
+    align-items:center;
+    gap:0.8rem;
+    padding:0.9rem 1rem;
+    border:2px solid #d7e3ea;
+    border-radius:1rem;
+    cursor:pointer;
+    font-size:clamp(1rem, 1.8vw, 1.3rem);
+    user-select:none;
+  }
+  label.choice:has(input:checked){
+    border-color:#7aaee6;
+    background:#f3f9ff;
+  }
+  input[type="radio"]{
+    width:1.3rem;
+    height:1.3rem;
+    accent-color:#1976d2;
+  }
+  .btns{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0.7rem;
+  }
+  @media (max-width: 600px){
+    .btns{grid-template-columns:1fr}
+  }
+  button{
+    border:none;
+    border-radius:1rem;
+    padding:1rem;
+    font-size:clamp(1rem, 1.8vw, 1.2rem);
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .start{background:#2e7d32; color:white;}
+  .stop{background:#c62828; color:white;}
+  .reset{background:#546e7a; color:white;}
+  button:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+    box-shadow:none;
+  }
+  .info{
+    display:grid;
+    gap:0.8rem;
+  }
+  .info-box{
+    background:#f8fbfd;
+    border:1px solid #dfe8ee;
+    border-radius:1rem;
+    padding:0.9rem;
+    font-size:clamp(1rem, 1.7vw, 1.2rem);
+    line-height:1.5;
+  }
+  .status{
+    font-weight:800;
+    color:var(--accent);
+  }
+  .status.stop{
+    color:var(--danger);
+  }
+  .status.wait{
+    color:#1565c0;
+  }
+  .readout{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:0.8rem;
+  }
+  @media (max-width: 600px){
+    .readout{grid-template-columns:1fr}
+  }
+  .card{
+    border-radius:1rem;
+    padding:1rem;
+    color:white;
+    min-height:110px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .water{background:linear-gradient(135deg,#1976d2,#42a5f5)}
+  .oil{background:linear-gradient(135deg,#ef6c00,#ffb300)}
+  .card .small{
+    font-size:clamp(0.9rem,1.5vw,1rem);
+    opacity:0.95;
+  }
+  .card .big{
+    font-size:clamp(1.5rem,3vw,2.4rem);
+    font-weight:800;
+    margin-top:0.3rem;
+  }
+  .canvas-wrap{
+    width:100%;
+    aspect-ratio: 16 / 10;
+    min-height:320px;
+    border-radius:1rem;
+    overflow:hidden;
+    background:white;
+    border:1px solid #e1
